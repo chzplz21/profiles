@@ -113,14 +113,21 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /*
         $userID = Auth::id();
         $postData = Post::where('userID', $userID )->where('id', $id)->first();
         $postData->update($request->all());    
-        GeneralCrud::ImageInsert($postData, $request);
+        //GeneralCrud::ImageInsert($postData, $request);
+        */
+        $userID = Auth::id();
+        $editPost = Post::firstOrCreate(['userID' => $userID]);
+        $postUpdate = Post::where('userID', $userID)->first();
+        //Mass Assignment update
+        $postUpdate->update($request->all());
         $message = "You successfully updated your post info";
+   
         return view('dashboard.message',  ['message' => $message]);
         
-    
     }
 
     /**

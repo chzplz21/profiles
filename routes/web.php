@@ -28,7 +28,7 @@ Route::get('/dashboard', 'DashboardController@index');
 
 
 Route::get('/create', 'PostController@create');
-Route::get('/editPost/{id}', 'PostController@edit');
+Route::post('/dashboard/editPost/{id}', 'PostController@update');
 Route::post('/submitPost', 'PostController@store');
 //After editing the post, update
 Route::post('/editPost/finishedEdit/{id}', 'PostController@update');

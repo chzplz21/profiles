@@ -20,11 +20,11 @@
                 <div id = "about">
                   
                     <h3> About Me </h3>
-                    @if (count($profileInfo)) 
+                    @if (count($user)) 
                         <div class = "imageHolder">
-                            <img class = "imageItself" src = "{{$profileInfo->image}}">
+                            <img class = "imageItself" src = "">
                         </div>
-                        <p>{{$profileInfo->about}}</p>
+                        <p></p>
 
                     @endif
                 <p><a href = "editProfile">Edit</a></p>
@@ -33,34 +33,21 @@
                 <div id = "posts">
                     <h3>Things I Like</h3>
 
-                    <textarea>
-                        @if (!count($postData)) 
-                            There's nothing here yet friend!
-                        @else 
-                            {{$postData->postBody}}
-                            <a href = "editPost/{{$postData->id}}">Update</a>
-                        @endif
-                    </textarea>
+                    <form method = "post" action = "/dashboard/editPost/{{$user[0]->id}}">
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                
+                        <textarea name = "postBody" class = "textarea">
+                            {{$user[0]->postBody}}
+                        </textarea>
+                
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
 
-                    
+                  
 
             
-                    @foreach ($postData as $item)
-                        <div>
-                            <div>
-                            <textarea>
-                            {{$item->postBody}}
-                            </textarea>
-                            </div>
-                            <div class = "imageHolder">
-                                <img class = "imageItself" src = "{{$item->image}}">
-                            </div>
-                            <a href = "editPost/{{$item->id}}">Update</a>
-                            
-                        </div>
-                        
-                    @endforeach
-                </p>
+                    
+                
             
             </div>
         </div>
