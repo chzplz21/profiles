@@ -1,0 +1,11 @@
+.imageHolder {
+    height: auto;
+    width: 200px;
+    border: solid blue;
+}
+
+
+.imageItself {
+    max-width:100%;
+    max-height:100%;
+}
