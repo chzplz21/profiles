@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\editProfile;
 use App\Http\Controllers\GeneralCrud;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -29,7 +30,9 @@ class EditProfileController extends Controller
      */
     public function create()
     {
-        return view('dashboard.editProfile');
+        $id = Auth::id();
+        $aboutDetails = editProfile::where('userID', $id)->first();
+        return view('dashboard.editProfile', ['aboutDetails' => $aboutDetails]);
     }
 
     /**
@@ -42,19 +45,7 @@ class EditProfileController extends Controller
     public function store(Request $request)
     {  
 
-        Log::info($request);
-        //Creates record, if hasn't been created before
-        $id = $request->user()->id;
-        $editProfile = editProfile::firstOrCreate(['userID' => $id]);
-        //Update
-        $aboutUpdate = editProfile::where('userID', $id)->first();
-        //Mass Assignment update
-        $aboutUpdate->update($request->all());       
-        //Static method for image inserts
-        GeneralCrud::ImageInsert($aboutUpdate, $request);
-
-        $message = "Great job, you've updated your profile";
-        return view('dashboard.message',  ['message' => $message]);
+        
 
     }
 
@@ -87,19 +78,21 @@ class EditProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+     
+        //Creates record, if hasn't been created before
+        $id = Auth::id();
+        $editProfile = editProfile::firstOrCreate(['userID' => $id]);
+        //Update
+        $aboutUpdate = editProfile::where('userID', $id)->first();
+        //Mass Assignment update
+        $aboutUpdate->update($request->all());       
+        //Static method for image inserts
+        GeneralCrud::ImageInsert($aboutUpdate, $request);
+
+        $message = "Great job, you've updated your profile";
+        return view('dashboard.message',  ['message' => $message]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

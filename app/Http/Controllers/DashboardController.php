@@ -9,6 +9,7 @@ use App\editProfile;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Search\SearchDashboard;
 
 class DashboardController extends Controller
 {
@@ -18,24 +19,17 @@ class DashboardController extends Controller
         $id = Auth::id();
         //Log::info($id);
 
-        //$user = User::where('id', $id)->first();
-        $user = DB::table('users')->join('posts', 'users.id', '=', 'posts.userID')->where('users.id', '=', $id)->get();
-       
-        /*
-        if (!count($user)) {
-            $user = User::where('id', $id)->first();
-        }
-        */
-        Log::info($user);
-
-        /*
+        $user = User::where('id', $id)->first();
         //Gets profile info for user
         $profileInfo =  editProfile::where('userID', $id)->first();
    
         //Gets all post data for user
         $postData = Post::where('userID', $id)->first();
-       */
 
-        return view('dashboard.dashboard', ['user' => $user]);
+        $search = new SearchDashboard;
+        $sortedUsers = $search->search($postData->postBody, $id);
+        
+        return view('dashboard.dashboard', ['user' => $user, 'profileInfo' => $profileInfo, 'postData' => $postData, 
+        'sortedUsers' => $sortedUsers]);
     }
 }

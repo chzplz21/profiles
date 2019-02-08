@@ -22,9 +22,9 @@
                     <h3> About Me </h3>
                     @if (count($user)) 
                         <div class = "imageHolder">
-                            <img class = "imageItself" src = "">
+                            <img class = "imageItself" src = "{{$profileInfo->image or ""}}">
                         </div>
-                        <p></p>
+                        <p>{{$profileInfo->about or "edit your about info"}}</p>
 
                     @endif
                 <p><a href = "editProfile">Edit</a></p>
@@ -33,12 +33,12 @@
                 <div id = "posts">
                     <h3>Things I Like</h3>
 
-                    <form method = "post" action = "/dashboard/editPost/{{$user[0]->id}}">
+                    <form method = "post" action = "/dashboard/editPost/{{$user->id}}">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 
-                        <textarea name = "postBody" class = "textarea">
-                            {{$user[0]->postBody}}
-                        </textarea>
+                        <textarea name = "postBody" class = "dashboardTextArea">{{$postData->postBody or "Add Something Here"}}</textarea>
+                             
+                     
                 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
@@ -53,4 +53,10 @@
         </div>
     </div>
 </div>
+
+
+@include('search.searchResults')
+
 @endsection
+
+

@@ -6,16 +6,26 @@ use App\Post;
 use App\editProfile;
 use App\Messages;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProfileVisitorController extends Controller
 {
     public function index ($id) {
+
+        $profileUser= DB::table('users')->
+        join('posts', 'users.id', '=', 'posts.userID')->
+        join('editprofile', 'users.id', '=', 'editprofile.userID')->
+        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'users.name')->
+        where('users.id', '=', $id)->get();
+      
       
         //Gets profile info for user
+        /*
         $profileInfo =  editProfile::where('userID', $id)->first();
         //Gets all post data for user
         $postData = Post::where('userID', $id)->get();
-        return view('dashboard.profileVisitor',  ['profileInfo' => $profileInfo, 'postData' => $postData]);
+        */
+        return view('visitor.profileVisitor',  ['profileUser' => $profileUser]);
         
     }
 

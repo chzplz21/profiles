@@ -1,10 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Log;
-
-
-
-
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,15 +35,20 @@ Route::get('/greatJob', 'PostController@success')->name('greatJob');
 
 //Editing profile
 Route::get('/editProfile', 'EditProfileController@create');
-Route::post('/updateProfile', 'EditProfileController@store');
+Route::post('/updateProfile', 'EditProfileController@update');
 
 //Shows profile to visitor
 Route::get('/user/{id}', 'ProfileVisitorController@index');
 //Message a user
 Route::get('/user/message/{id}', 'ProfileVisitorController@showMessageForm');
+
 //Receives incoming contact message
 Route::post('/messageSent/{id}', 'ProfileVisitorController@messageReceived');
 Route::get('/messageSuccess', 'ProfileVisitorController@success')->name('messageSuccess');
+
+//Search
+Route::get('/search', 'Search\SearchRequestController@search');
+ 
 
 
 

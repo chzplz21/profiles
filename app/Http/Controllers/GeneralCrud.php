@@ -9,12 +9,7 @@ class GeneralCrud {
 
     
     public static function Update($userRecord, $request) {
-
-        
-
-       
-         
-         //  $request->file('image')->storeAs('public/assets/images', $imageName);  
+     
 
     }
 
