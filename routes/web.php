@@ -48,6 +48,10 @@ Route::get('/messageSuccess', 'ProfileVisitorController@success')->name('message
 
 //Search
 Route::get('/search', 'Search\SearchRequestController@search');
+
+//DummyData
+Route::get('/dummyData', 'Dummy\dummyData@insertIntoPosts');
+Route::get('/dummyUpdate', 'Dummy\dummyUpdate@update');
  
 
 

@@ -26,9 +26,15 @@ class DashboardController extends Controller
         //Gets all post data for user
         $postData = Post::where('userID', $id)->first();
 
-        $search = new SearchDashboard;
-        $sortedUsers = $search->search($postData->postBody, $id);
-        
+        if (count($postData)) {
+      
+            $search = new SearchDashboard;
+            $sortedUsers = $search->search($postData->postBody, $id);
+           
+        }else {
+           $sortedUsers = "";
+        }
+
         return view('dashboard.dashboard', ['user' => $user, 'profileInfo' => $profileInfo, 'postData' => $postData, 
         'sortedUsers' => $sortedUsers]);
     }

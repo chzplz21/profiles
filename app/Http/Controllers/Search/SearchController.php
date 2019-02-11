@@ -14,6 +14,7 @@ class SearchController extends Controller
     private $bigIntersection = [];
 
     public function searchAll($searchString) {
+        
         $allUsers = DB::table('users')->
         join('posts', 'users.id', '=', 'posts.userID')->
         join('editprofile', 'users.id', '=', 'editprofile.userID')->
@@ -25,6 +26,8 @@ class SearchController extends Controller
             $this->Compare($requestArray, $user);
         }
         $this->getTopThree();
+       
+
         return $this->bigIntersection;
           
     }
@@ -32,12 +35,18 @@ class SearchController extends Controller
     //Compares request array with all user post arrays
     private function Compare ($requestArray, $user) {
         $user = json_decode(json_encode($user), true);
+        //puts each word of post body into index of array
         $userArray = explode(",", $user["postBody"]);
-        $intersection = array_intersect($requestArray, $userArray);
+        //trims each word in array
+        $userArray = array_map('trim', $userArray);
+        $requestArray = array_filter(array_map('trim', $requestArray));
+        $intersection = array_filter(array_intersect($requestArray, $userArray));
+        
+        
 
         if (count($intersection)) {
-            $intersection = implode(",", $intersection);
-            $tempArray = array("amount" => count($intersection), "commonThings" => $intersection);
+            $intersectionString = implode(", ", $intersection);
+            $tempArray = array("amount" => count($intersection), "commonThings" => $intersectionString);
             $this->bigIntersection[] = array_merge($tempArray, $user);
         }
         
@@ -53,9 +62,7 @@ class SearchController extends Controller
     }
 
 
-    private function showBig() {
-         
-    }
+
 
 
 }

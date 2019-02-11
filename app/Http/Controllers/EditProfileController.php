@@ -89,7 +89,9 @@ class EditProfileController extends Controller
         //Mass Assignment update
         $aboutUpdate->update($request->all());       
         //Static method for image inserts
-        GeneralCrud::ImageInsert($aboutUpdate, $request);
+        if ($request->file()) {
+            GeneralCrud::ImageInsert($aboutUpdate, $request);
+        }
 
         $message = "Great job, you've updated your profile";
         return view('dashboard.message',  ['message' => $message]);
