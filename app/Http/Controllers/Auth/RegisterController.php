@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\editProfile;
+use App\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -73,8 +74,6 @@ class RegisterController extends Controller
     }
 
 
-   
-
     /**
      * Create a new user instance after a valid registration.
      *
@@ -95,6 +94,35 @@ class RegisterController extends Controller
         return $user;
 
     }
+
+
+    //Overriding method in RegistersUsers trait
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        event(new Registered($user = $this->create($request->all())));
+        $this->guard()->login($user);
+        Log::info($user);
+
+        //Creates Records for editProfile and Post
+        //This was the reason for ovveriding the trait method..
+        $profile = new editProfile;
+        $profile->userID = $user->id;
+        $profile->save();
+
+        $post = new Post;
+        $post->userID = $user->id;
+        $post->save();
+
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
+    }
+
+
+
+
+
+
 
 
 

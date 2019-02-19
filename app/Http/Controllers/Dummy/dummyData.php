@@ -17,7 +17,7 @@ class dummyData extends Controller
         $json = array();
         $this->lines = array();
 
-        for ($i = 0; $i<100; $i++) {
+        for ($i = 0; $i<5; $i++) {
             $string = file_get_contents("https://randomuser.me/api/?nat=us");
             $json_a = json_decode($string, true);
             $json[] = $json_a["results"][0];
@@ -46,16 +46,14 @@ class dummyData extends Controller
 
         $this->insert();
 
-       
-
     }
 
 
     function insert() {
         foreach ($this->bigArray as $person) {
-          // $id = $this->insertIntoUsers($person);
-           //$this->insertIntoProfile($person, $id);
-           $this->insertIntoPosts();
+           $id = $this->insertIntoUsers($person);
+           $this->insertIntoProfile($person, $id);
+           $this->insertIntoPosts($id);
         }
 
     }
@@ -77,44 +75,32 @@ class dummyData extends Controller
         $editProfile->userID = $id;
         $editProfile->image = $person["picture"];
         $editProfile->phone = $person["phone"];
-        $editProfile->state = $person["state"];
-        $editProfile->city = $person["city"];
+        $editProfile->location = $person["state"];
         $editProfile->save();
-
-
     }
 
   
-    function insertIntoPosts() {
+    function insertIntoPosts($id) {
 
+        $string = file_get_contents(__DIR__  . "/words.txt");
+        $lines = explode(PHP_EOL, $string );
+        $arrayCount = count($lines);
+        //Minus 1 to include all indexes in array
+        $arrayCount = $arrayCount - 1;
         $array = [];
-    
-        $rand_keys = array_rand($this->lines, 100);
-        shuffle($rand_keys);
-        // var_dump($rand_keys);
-        
+
         for ($i=0; $i<100; $i++) {
-            $array[] = $this->lines[$rand_keys[$i]];
-            var_dump($rand_keys[$i]);
+            $randomNumber = rand (0, $arrayCount);
+            $array[] = $lines[$randomNumber];
+            //var_dump($rand_keys[$i]);
         }
 
         $string = implode(", ", $array);
-        
-    
-        /*
-        $flight = Post::updateOrCreate(
-            ['userID' => $id],
-            ['postBody' => $string]
-        );
-        */
-
-        /*
         $post = new Post;
-        $post->userID = $id;
+        $post->userID = $id;  
         $post->postBody = $string;
         $post->save();
-        */
-
+                
     }
     
 }

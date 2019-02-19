@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Post;
 use App\editProfile;
+use App\Messages;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -17,25 +18,46 @@ class DashboardController extends Controller
     {  
         //Gets id for user
         $id = Auth::id();
-        //Log::info($id);
+       
 
-        $user = User::where('id', $id)->first();
-        //Gets profile info for user
-        $profileInfo =  editProfile::where('userID', $id)->first();
-   
         //Gets all post data for user
         $postData = Post::where('userID', $id)->first();
 
+        $profileUser= DB::table('users')->
+        join('posts', 'users.id', '=', 'posts.userID')->
+        join('editprofile', 'users.id', '=', 'editprofile.userID')->
+        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'editprofile.location', 'users.name')->
+        where('users.id', '=', $id)->get();
+
+
         if (count($postData)) {
-      
             $search = new SearchDashboard;
             $sortedUsers = $search->search($postData->postBody, $id);
-           
+            $searchString = $postData->postBody;
         }else {
            $sortedUsers = "";
+           $searchString = "";
         }
 
-        return view('dashboard.dashboard', ['user' => $user, 'profileInfo' => $profileInfo, 'postData' => $postData, 
-        'sortedUsers' => $sortedUsers]);
+        
+        return view('dashboard.dashboard', ['profileUser' => $profileUser, 'searchString' => $searchString, 
+        'sortedUsers' => $sortedUsers, "action" => "/dashboard/search", "dashboard" => true]);
+        
     }
+
+    public function showMessages() {
+        $id = Auth::id();
+        $messages = Messages::where('userID', $id)->get();
+        return view('Messages.myMessages', ['messages' =>  $messages]);
+
+
+
+
+    }
+
+
+
+
+
+
 }

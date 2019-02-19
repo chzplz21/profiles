@@ -8,9 +8,11 @@ use App\Http\Controllers\Controller;
 class SearchRequestController extends SearchController
 {
     public function search(Request $request) { 
+        $searchString = $request->postBody;
        
-        $searchString = $request->searchBody;
         $sortedUsers = $this->searchAll($searchString);
-        return view('search.generalSearch',  ['sortedUsers' => $sortedUsers]);
+        
+        return view('search.generalSearch',  ['sortedUsers' => $sortedUsers, 'searchString' => $searchString,
+        'action' => 'search']);
     }
 }

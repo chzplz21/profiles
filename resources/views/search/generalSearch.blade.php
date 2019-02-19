@@ -6,4 +6,8 @@
 
 @include('search.searchResults')
 
+
 @endsection
+
+
+

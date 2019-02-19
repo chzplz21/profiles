@@ -1,12 +1,10 @@
 @extends('layouts.app')
 
-
 @section('content')
 
-    <div class = "container">
-        <a href = "/dashboard">Dashboard</a>
-            {{$message}}        
+<h1 class = "generalMessage">
+    {{$message}}
+</h1>
 
-    </div>
 
 @endsection

@@ -12,17 +12,6 @@ use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {  
-        
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -72,17 +61,7 @@ class PostController extends Controller
         return redirect()->route('greatJob');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        
-        
-    }
+  
 
     /**
      * Show the form for editing the specified resource.
@@ -96,10 +75,7 @@ class PostController extends Controller
        $postID = $id;
        //id of current user (based on their session)
        $userID = Auth::id();
-      
        $postData = Post::where('userID', $userID )->where('id', $postID)->first();
-      
-      
        return view('dashboard.editPost', ['postData' => $postData]);
      
     }
@@ -111,17 +87,14 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $userID = Auth::id();
-        $editPost = Post::firstOrCreate(['userID' => $userID]);
         $postUpdate = Post::where('userID', $userID)->first();
-        //Mass Assignment update
-        $postUpdate->update($request->all());
-        $message = "You successfully updated your post info";
-   
-        return view('dashboard.message',  ['message' => $message]);
-        
+        $postUpdate->postBody = strtolower($request->postBody);
+        $postUpdate->save();
+
+        return redirect()->route('dashboard');
     }
 
     /**

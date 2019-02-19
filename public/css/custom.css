@@ -1,27 +1,87 @@
 
+.recentH2, .userLabel, .profileName, .generalLink{
+    color: #008F95 !important;
+}
+
+.thingsLike {
+    color: #E9B000;
+}
+
+
+
+.btn-primary {
+    background-color: #E9B000;
+    border:  #E9B000;
+    margin-bottom: 15px;
+    padding:    15px 40px;
+}
+
+.btn-primary:hover, .dropdown-menu, .dropwdown-toggle  {
+    background-color: #008F95 !important;
+}
+
+
+
 
 
 .imageItself {
-    
-   
-    width: 80%;
+    width: 70%;
+
+}
+
+.profileName {
+    margin-top: 0;
+}
+
+.userPost {
+    margin-top: 10px;
+}
+
+.userContainer {
+    margin: 0 auto;
+    float: none;
 }
 
 .searchTextArea {
-    width: 100%;
-    height: 50px;
+    width: 70%;
+    height: 75px;
     text-align: left;
+    display: block;
+    color: black;
+    margin: 0 auto;
+    margin-bottom: 15px;
+    font-weight: bold;
     
+}
+
+.navbar {
+    background-color: #008F95;
+
+}
+
+.navbar a {
+    color: white !Important;
+}
+
+.navbar a:hover {
+    color: #E9B000 !important;
+    font-weight: bold !important;
 }
 
 .searchContainer {
     text-align: center;
-    width: 80%;
+  /*  width: 80%; */
     margin: 0 auto;
+    background-color:#E24E42;
+    color: white;
+    padding: 10px;
+   
 }
 
-.littleUserBox{
-    border: solid blue;
+
+
+.littleUserBox:hover {
+   border: solid #008F95;
 }
 
 
@@ -32,6 +92,43 @@
 .littleUserBox  a:hover {
     text-decoration: none;
 }
+
+.highlight {
+    background-color: #E9B000;
+}
+
+
+
+
+.well {
+    background-color: #E24E42;
+}
+
+.block {
+    display: block;
+    margin-bottom: 20px;
+}
+
+.top {
+    margin-top:10px;
+}
+
+.bottom {
+    margin-bottom: 20px;
+}
+
+/* Dashboard */
+
+.message {
+    border: solid #008F95;
+}
+
+.littleUserBox {
+    margin-bottom: 20px;
+   
+}
+
+
 
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dummy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\editProfile;
 
 class dummyUpdate extends Controller
 {
@@ -14,7 +15,7 @@ class dummyUpdate extends Controller
         $arrayCount = count($lines);
         //Minus 1 to include all indexes in array
         $arrayCount = $arrayCount - 1;
-        echo $arrayCount;
+
         $posts = Post::all();
 
         foreach($posts as $post) {
@@ -35,6 +36,19 @@ class dummyUpdate extends Controller
         }
     
     }
+
+    function updateLocation() {
+        $profiles = editProfile::all();
+        foreach($profiles as $profile) {
+            if ($profile->state != null) {
+              $profile->location = $profile->state;
+              $profile->save();
+            }
+        }
+    }
+
+
+   
     
 }
 

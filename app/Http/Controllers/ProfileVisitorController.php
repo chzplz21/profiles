@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\User;
 use App\editProfile;
 use App\Messages;
 use Illuminate\Http\Request;
@@ -15,22 +16,16 @@ class ProfileVisitorController extends Controller
         $profileUser= DB::table('users')->
         join('posts', 'users.id', '=', 'posts.userID')->
         join('editprofile', 'users.id', '=', 'editprofile.userID')->
-        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'users.name')->
+        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'editprofile.location', 'users.name')->
         where('users.id', '=', $id)->get();
-      
-      
-        //Gets profile info for user
-        /*
-        $profileInfo =  editProfile::where('userID', $id)->first();
-        //Gets all post data for user
-        $postData = Post::where('userID', $id)->get();
-        */
-        return view('visitor.profileVisitor',  ['profileUser' => $profileUser]);
+
+        return view('visitor.profileVisitor',  ['profileUser' => $profileUser, 'dashboard' => false]);
         
     }
 
     public function showMessageForm($id) {
-        return view('dashboard.messageForm',  ['userID' => $id]);
+        $name = User::where('id', $id)->first();
+        return view('Messages.messageForm',  ['userID' => $id, "user" => $name]);
     }
 
     //After contact message has been sent

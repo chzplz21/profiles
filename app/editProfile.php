@@ -8,5 +8,5 @@ class editProfile extends Model
 {
     //
     public $table = "editprofile";
-    protected $fillable = ['userID', 'about', 'image'];
+    protected $fillable = ['userID', 'about', 'image', 'location'];
 }

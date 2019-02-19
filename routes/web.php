@@ -21,7 +21,7 @@ Route::get('/', 'frontController@index');
 Auth::routes();
 
 //Front of dashboard
-Route::get('/dashboard', 'DashboardController@index');
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 
 Route::get('/create', 'PostController@create');
@@ -29,9 +29,10 @@ Route::post('/dashboard/editPost/{id}', 'PostController@update');
 Route::post('/submitPost', 'PostController@store');
 //After editing the post, update
 Route::post('/editPost/finishedEdit/{id}', 'PostController@update');
-//Delete Post
-Route::get('/deletePost/{id}', 'PostController@destroy');
-Route::get('/greatJob', 'PostController@success')->name('greatJob');
+
+
+
+
 
 //Editing profile
 Route::get('/editProfile', 'EditProfileController@create');
@@ -39,19 +40,26 @@ Route::post('/updateProfile', 'EditProfileController@update');
 
 //Shows profile to visitor
 Route::get('/user/{id}', 'ProfileVisitorController@index');
-//Message a user
-Route::get('/user/message/{id}', 'ProfileVisitorController@showMessageForm');
+
+
 
 //Receives incoming contact message
+Route::get('/user/message/{id}', 'ProfileVisitorController@showMessageForm');
 Route::post('/messageSent/{id}', 'ProfileVisitorController@messageReceived');
 Route::get('/messageSuccess', 'ProfileVisitorController@success')->name('messageSuccess');
+Route::get('/myMessages', 'DashboardController@showMessages');
+
 
 //Search
 Route::get('/search', 'Search\SearchRequestController@search');
+//Search From Dashboard
+Route::get('/dashboard/search', 'PostController@update');
+
 
 //DummyData
-Route::get('/dummyData', 'Dummy\dummyData@insertIntoPosts');
+Route::get('/dummyData', 'Dummy\dummyData@index');
 Route::get('/dummyUpdate', 'Dummy\dummyUpdate@update');
+Route::get('/dummyUpdateLocation', 'Dummy\dummyUpdate@updateLocation');
  
 
 

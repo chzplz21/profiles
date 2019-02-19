@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 
 class SearchController extends Controller
 {
-
     private $bigIntersection = [];
 
     public function searchAll($searchString) {
@@ -18,8 +17,9 @@ class SearchController extends Controller
         $allUsers = DB::table('users')->
         join('posts', 'users.id', '=', 'posts.userID')->
         join('editprofile', 'users.id', '=', 'editprofile.userID')->
-        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'users.name')->get()->toArray();
+        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'editprofile.location', 'users.name')->get()->toArray();
 
+        $searchString = strtolower($searchString);
         $requestArray = explode(",", $searchString);
         //loops through every user post
         foreach ($allUsers as $user) {

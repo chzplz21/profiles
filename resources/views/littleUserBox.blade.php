@@ -1,33 +1,39 @@
 
-<div class = "card col-sm-3 littleUserBox">
+<div class = "col-sm-3 littleUserBox">
     <a href = "/user/{{$user["id"]}}">
         <div class = "singlePost">
             <div class = "imageHolder">
                 <img class = "imageItself" src = "{{$user["image"] or ""}}">
             </div>
             <p>
-                Name: 
+                <span class = "userLabel"> Name: </span>
                 <span class = "description">
                     {{$user["name"]}}
                 </span>
             </p>
+            <p>
+                    <span class = "userLabel">Location: </span>
+                    <span class = "description">
+                        {{$user["location"]}}
+                    </span>
+                </p>
             
             @isset($user['commonThings'])
-              <p>Amount of things you have in common:
+              <p><span class = "userLabel">Amount of things you have in common:</span>
                 <span class = "description">
                     {{$user["amount"]}}
                 </span>
               </p>
               <p>
-                  What You Have in common: 
-                  <span class = "description">
+                 <span class = "userLabel">What You Have in common:</span>
+                  <span class = "description commonThings highlight">
                     {{$user["commonThings"]}}
                   </span>
                </p>
             @endisset
             
-            <p>Things They Like: 
-                <span class = "description">
+            <p><span class = "userLabel">Things They Like:</span>
+                <span class = "description allThings">
                   {{$user["postBody"]}}
                 </span>
            </p>

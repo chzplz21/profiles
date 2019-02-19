@@ -18,20 +18,21 @@ class frontController extends Controller
         $recentPosts = DB::table('users')->
         join('posts', 'users.id', '=', 'posts.userID')->
         join('editprofile', 'users.id', '=', 'editprofile.userID')->
-        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'users.name')->
+        select('users.name', 'users.id', 'posts.postBody', 'editprofile.image', 'editprofile.location', 'users.name')->
         inRandomOrder()->
         take(4)->
         get();
 
         $users = json_decode(json_encode($recentPosts), true);
-
         //var_dump($users);   
-        
         //$users["commonThings"] = "";
-
-       
-       
-        return view('frontPage',  ['recentPosts' => $users]);
+        return view('frontPage',  ['recentPosts' => $users, "action" => "search"]);
 
     }
+
+
+
+
+
+
 }
