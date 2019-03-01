@@ -1,6 +1,6 @@
 <div class = "searchContainer">
     
-    <h2>Add things that you like, seperate by commas!</h2>
+    <h2>Add things that you like, seperated by commas!</h2>
     <h3>Each thing must be only one word</h3>
     <form class = "searchBox" method = "get" action = "{{ $action }}">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
