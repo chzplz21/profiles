@@ -33,7 +33,7 @@
 
                     <!-- Branding Image -->
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        We Are Similar
+                        We Are bimilar
                     </a>
                 </div>
 
