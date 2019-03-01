@@ -3,7 +3,7 @@
 @section('content')
    
     @include('search.searchBox')
-        <h2 class = "recentH2">Beatured Profiles</h2>
+        <h2 class = "recentH2">leatured Profiles</h2>
         @foreach ($recentPosts as $user)
             @include('littleUserBox')
             
